@@ -1,0 +1,2510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RajuTimes - Find Your Dream Home</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff6b35;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #ff6b35;
+        }
+
+        /* Dropdown functionality for More menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 5px;
+            top: 100%;
+            right: 0;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #ff6b35;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .cta-button {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #e55a2b;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Sections - Hidden by default */
+        .page-section {
+            display: none;
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Added Careers Page Styles */
+        .careers-hero {
+            background: linear-gradient(135deg, #ff6b35, #f093fb, #f5576c, #4facfe, #00f2fe);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .careers-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%23ffffff20" points="0,0 300,200 600,50 1000,300 1000,0"/><polygon fill="%23ffffff10" points="0,300 400,100 700,250 1000,150 1000,600 0,800"/></svg>');
+            background-size: cover;
+        }
+
+        .careers-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            max-width: 600px;
+        }
+
+        .careers-content h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .careers-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .explore-jobs-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .explore-jobs-btn:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+        }
+
+        .life-at-company {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .life-at-company h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .company-culture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .culture-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .culture-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .culture-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .culture-card-content {
+            padding: 1.5rem;
+        }
+
+        .culture-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .culture-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Added Blogs Page Styles */
+        .blogs-hero {
+            background: #f8f9fa;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .blogs-hero h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .blogs-hero p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .blog-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .filter-btn {
+            background: #f1f1f1;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: #ff6b35;
+            color: white;
+        }
+
+        .blog-search {
+            max-width: 400px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .blog-search input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+
+        .blog-search button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #ff6b35;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .blogs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .blog-post-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .blog-post-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-post-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-post-content {
+            padding: 1.5rem;
+        }
+
+        .blog-category {
+            background: #ff6b35;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .blog-post-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .read-more-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* Added About Us Page Styles */
+        .about-hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url("img/house.jpg");
+            background-size: cover;
+            background-position: center;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+
+        .about-hero-content {
+            max-width: 600px;
+        }
+
+        .about-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-hero h1 .highlight {
+            color: #ff6b35;
+        }
+
+        .about-hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .view-properties-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .view-properties-btn:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+        }
+
+        .about-content {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .about-section {
+            margin-bottom: 4rem;
+        }
+
+        .about-section h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        .about-section p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.8;
+            max-width: 800px;
+        }
+
+        .team-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .team-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 3rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-member {
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        .team-member h3 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-member .position {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .team-member .linkedin-btn {
+            background: #0077b5;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .team-member .linkedin-btn:hover {
+            background: #005885;
+        }
+
+        /* Added floating buttons */
+        .floating-buttons {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .float-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .whatsapp-btn {
+            background: #25d366;
+        }
+
+        .whatsapp-btn:hover {
+            background: #128c7e;
+            transform: scale(1.1);
+        }
+
+        .phone-btn {
+            background: #ff6b35;
+        }
+
+        .phone-btn:hover {
+            background: #e55a2b;
+            transform: scale(1.1);
+        }
+
+
+        /* Hero Section */
+
+
+
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url("img/house.jpg");
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            color: white;
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .highlight {
+            color: #ff6b35;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .search-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-group select {
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            background: white;
+        }
+
+        .search-button {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-self: start;
+        }
+
+        .search-button:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+        }
+
+        /* Cities Section */
+        .cities-section {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 3rem;
+        }
+
+        .cities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .city-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .city-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .city-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .bangalore {
+            background: linear-gradient(135deg, #ff9a56, #ff6b35);
+            color: white;
+        }
+
+        .pune {
+            background: linear-gradient(135deg, #a855f7, #7c3aed);
+            color: white;
+        }
+
+        .chennai {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            color: white;
+        }
+
+        .hyderabad {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+        }
+
+        .dubai {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            color: white;
+        }
+
+        .city-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .city-card p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Partners Section */
+
+.partners-section {
+  padding: 60px 0;
+  background: #ffffff;
+  overflow: hidden;
+  position: relative;
+}
+
+.partners-title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 2.5rem;
+}
+
+.partners-slider {
+  display: flex;
+  width: max-content;
+  animation: scroll 25s linear infinite;
+}
+
+.partner-logo {
+  flex: 0 0 auto;
+  margin: 0 50px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.partner-logo img {
+  max-width: 140px;
+  height: 150px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.partner-logo:hover {
+  transform: scale(1.1);
+}
+
+.partner-logo:hover img {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+/* Animation for auto-scroll */
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Optional fade effect on edges */
+.partners-section::before,
+.partners-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 120px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.partners-section::before {
+  left: 0;
+  background: linear-gradient(to right, #fff, transparent);
+}
+
+.partners-section::after {
+  right: 0;
+  background: linear-gradient(to left, #fff, transparent);
+}
+
+
+
+
+
+
+
+        /* Featured Section */
+        .featured-section {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .featured-property {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            background: white;
+        }
+
+        .property-image {
+            background: url('/img/house.jpg') center/cover;
+            min-height: 400px;
+        }
+
+        .property-details {
+            background: linear-gradient(135deg, #1e3a8a, #1e40af);
+            color: white;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .property-details h2 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .property-details p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .explore-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            align-self: flex-start;
+        }
+
+        .explore-btn:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ====== Properties Section Styles ====== */
+.properties-section {
+    padding: 6rem 2rem 4rem;
+    background: #f8f9fa;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Section Title */
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 3rem;
+}
+
+/* Filter Bar */
+.filter-bar {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.filter-btn {
+    background: #e9ecef;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    background: #ff6b35;
+    color: #fff;
+}
+
+/* Properties Grid */
+.properties-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+/* Property Card */
+.property-card {
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.property-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+/* Property Image */
+.property-card img,
+.property-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.property-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Property Info */
+.property-info {
+    padding: 1.5rem;
+}
+
+.property-info h3,
+.property-title {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.location {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.property-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff6b35;
+    margin-bottom: 1rem;
+}
+
+/* Property Features */
+.property-features {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.feature i {
+    color: #ff6b35;
+}
+
+/* View Details Button */
+.view-details-btn {
+    display: block;
+    width: 100%;
+    padding: 0.9rem 1.5rem;
+    background: #ff6b35;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.view-details-btn:hover {
+    background: #e55a2b;
+}
+
+/* View More Button */
+.view-more-btn {
+    display: block;
+    margin: 0 auto;
+    background: transparent;
+    color: #ff6b35;
+    border: 2px solid #ff6b35;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.view-more-btn:hover {
+    background: #ff6b35;
+    color: white;
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .filter-btn {
+        margin: 5px 3px;
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    .property-info {
+        padding: 1rem;
+    }
+
+    .property-price {
+        font-size: 1.1rem;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* Process Section */
+        .process-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .process-step {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .process-step:hover {
+            transform: translateY(-5px);
+        }
+
+        .process-step .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .process-step h3 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .process-step p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Blog Section */
+        .blog-section {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .blog-info {
+            padding: 1.5rem;
+        }
+
+        .blog-date {
+            color: #ff6b35;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-info h3 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .blog-info p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Awards Section */
+        .awards-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+        }
+
+        .award-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .award-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .award-item img {
+            width: 80px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+        }
+
+        .award-item p {
+            font-size: 0.9rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .testimonial-rating {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #333;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: #ff6b35;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-details p {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .contact-details i {
+            color: #ff6b35;
+            width: 20px;
+        }
+
+        .contact-form {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .contact-form h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        .contact-form textarea {
+            grid-column: 1 / -1;
+            min-height: 120px;
+            resize: vertical;
+            margin-bottom: 1rem;
+        }
+
+        .submit-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #e55a2b;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #ff6b35;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: #ccc;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #ff6b35;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #ff6b35;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 1rem;
+            text-align: center;
+            color: #ccc;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-property {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .careers-content h1 {
+                font-size: 2rem;
+            }
+
+            .about-hero h1 {
+                font-size: 2rem;
+            }
+
+            .floating-buttons {
+                right: 15px;
+                bottom: 15px;
+            }
+
+            .float-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .cities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-filters {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+  <div class="logo">
+      <i class="fa-solid fa-building"></i> <!-- FontAwesome icon -->
+      <span>RajuTimes</span>
+    </div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('home')" class="nav-link active">Home</a></li>
+                <li><a href="#" onclick="showPage('properties')" class="nav-link">Properties</a></li>
+                <li><a href="#" onclick="showPage('careers')" class="nav-link">Careers</a></li>
+                <li><a href="#" onclick="showPage('blogs')" class="nav-link">Blogs</a></li>
+                <li><a href="#" onclick="showPage('contact')" class="nav-link">Contact Us</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">More <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="showPage('newsroom')">Newsroom</a>
+                        <a href="#" onclick="showPage('about')">About Us</a>
+                    </div>
+                </li>
+            </ul>
+            <button class="cta-button">Get in touch</button>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Added Home Page Section -->
+    <div id="home-page" class="page-section active">
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Find your <span class="highlight">Dream home</span> with RajuTimes</h1>
+                    <p class="hero-subtitle">Discover the perfect property that matches your lifestyle and budget</p>
+                    
+                    <form class="search-form">
+                        <div class="form-group">
+                            <label>Location</label>
+                            <select>
+                                <option>Select Location</option>
+                                <option>Bangalore</option>
+                                <option>Pune</option>
+                                <option>Chennai</option>
+                                <option>Hyderabad</option>
+                                <option>Dubai</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Property Type</label>
+                            <select>
+                                <option>Select Type</option>
+                                <option>Apartment</option>
+                                <option>Villa</option>
+                                <option>Office</option>
+                                <option>Commercial</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Budget</label>
+                            <select>
+                                <option>Select Budget</option>
+                                <option>Under 50L</option>
+                                <option>50L - 1Cr</option>
+                                <option>1Cr - 2Cr</option>
+                                <option>Above 2Cr</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Purpose</label>
+                            <select>
+                                <option>Buy/Rent</option>
+                                <option>Buy</option>
+                                <option>Rent</option>
+                            </select>
+                        </div>
+                    </form>
+                    <button class="search-button">
+                        <i class="fas fa-search"></i> Search Properties
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cities Section -->
+        <section class="cities-section">
+            <div class="container">
+                <h2 class="section-title">Explore Properties in Top Cities</h2>
+                <div class="cities-grid">
+                    <div class="city-card bangalore">
+                        <h3>Bangalore</h3>
+                        <p>Silicon Valley of India</p>
+                    </div>
+                    <div class="city-card pune">
+                        <h3>Pune</h3>
+                        <p>Oxford of the East</p>
+                    </div>
+                    <div class="city-card chennai">
+                        <h3>Chennai</h3>
+                        <p>Detroit of India</p>
+                    </div>
+                    <div class="city-card hyderabad">
+                        <h3>Hyderabad</h3>
+                        <p>City of Pearls</p>
+                    </div>
+                    <div class="city-card dubai">
+                        <h3>Dubai</h3>
+                        <p>City of Gold</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partners Section -->
+    <section class="partners-section">
+  <div class="container">
+    <h2 class="partners-title">
+      RajuTimes Collaborates With India's Leading Builders
+    </h2>
+
+    <div class="partners-slider">
+      <div class="partner-logo"><img src="/img/agent.jpg" alt="Sobha"></div>
+      <div class="partner-logo"><img src="/img/agent.jpg" alt="Prestige"></div>
+      <div class="partner-logo"><img src="/img/agent.jpg" alt="Brigade"></div>
+      <div class="partner-logo"><img src="/img/agent.jpg" alt="Godrej"></div>
+      <div class="partner-logo"><img src="/img/agent.jpg" alt="DLF"></div>
+      <div class="partner-logo"><img src="/img/agent.jpg" alt="Shapoorji"></div>
+
+      <!-- Duplicate for infinite scroll -->
+      <div class="partner-logo"><img src="/img/agent.jpg" alt="Sobha"></div>
+      <div class="partner-logo"><img src="/img/agent.jpg" alt="Prestige"></div>
+      <div class="partner-logo"><img src="/img/agent.jpg" alt="Brigade"></div>
+      <div class="partner-logo"><img src="/img/agent.jpg" alt="Godrej"></div>
+      <div class="partner-logo"><img src="/img/agent.jpg" alt="DLF"></div>
+      <div class="partner-logo"><img src="/img/agent.jpg" alt="Shapoorji"></div>
+    </div>
+  </div>
+</section>
+
+
+
+        <!-- Featured Property -->
+        <section class="featured-section">
+            <div class="container">
+                <div class="featured-property">
+                    <div class="property-image"></div>
+                    <div class="property-details">
+                        <h2>SUNCREST</h2>
+                        <p>Experience luxury living at its finest with our premium residential complex featuring world-class amenities and stunning architecture.</p>
+                        <button class="explore-btn">Explore Now →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Properties Section -->
+        <section class="properties-section" id="properties">
+            <div class="container">
+                <h2 class="section-title">Properties You Might Like On RajuTimes</h2>
+                <div class="properties-grid">
+                    <div class="property-card">
+                        <img src="/img/pic2.jpg" alt="Property">
+                        <div class="property-info">
+                            <h3>Prestige Southern Star</h3>
+                            <p class="location">Begur Road, Bangalore</p>
+                            <div class="property-price">₹1.2 Cr onwards</div>
+                            <div class="property-features">
+                                <span class="feature"><i class="fas fa-bed"></i> 2-3 BHK</span>
+                                <span class="feature"><i class="fas fa-bath"></i> 2-3 Bath</span>
+                                <span class="feature"><i class="fas fa-car"></i> Parking</span>
+                            </div>
+                            <div class="property-actions">
+                                <button class="view-details-btn">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <img src="/img/pic2.jpg" alt="Property">
+                        <div class="property-info">
+                            <h3>Brigade Cornerstone</h3>
+                            <p class="location">Whitefield, Bangalore</p>
+                            <div class="property-price">₹85 Lac onwards</div>
+                            <div class="property-features">
+                                <span class="feature"><i class="fas fa-bed"></i> 1-2 BHK</span>
+                                <span class="feature"><i class="fas fa-bath"></i> 1-2 Bath</span>
+                                <span class="feature"><i class="fas fa-car"></i> Parking</span>
+                            </div>
+                            <div class="property-actions">
+                                <button class="view-details-btn">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="property-card">
+                        <img src="/img/pic2.jpg" alt="Property">
+                        <div class="property-info">
+                            <h3>Sobha Dream Acres</h3>
+                            <p class="location">Panathur Road, Bangalore</p>
+                            <div class="property-price">₹2.5 Cr onwards</div>
+                            <div class="property-features">
+                                <span class="feature"><i class="fas fa-bed"></i> 3-4 BHK</span>
+                                <span class="feature"><i class="fas fa-bath"></i> 3-4 Bath</span>
+                                <span class="feature"><i class="fas fa-car"></i> 2 Parking</span>
+                            </div>
+                            <div class="property-actions">
+                                <button class="view-details-btn">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="property-card">
+                        <img src="/img/pic2.jpg" alt="Property">
+                        <div class="property-info">
+                            <h3>Godrej Aqua</h3>
+                            <p class="location">Hosur Road, Bangalore</p>
+                            <div class="property-price">₹95 Lac onwards</div>
+                            <div class="property-features">
+                                <span class="feature"><i class="fas fa-bed"></i> 2-3 BHK</span>
+                                <span class="feature"><i class="fas fa-bath"></i> 2-3 Bath</span>
+                                <span class="feature"><i class="fas fa-car"></i> Parking</span>
+                            </div>
+                            <div class="property-actions">
+                                <button class="view-details-btn">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="view-more-btn">View More Properties</button>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section class="process-section">
+            <div class="container">
+                <h2 class="section-title">Our Process At RajuTimes</h2>
+                <div class="process-grid">
+                    <div class="process-step">
+                        <div class="icon">🔍</div>
+                        <h3>Property Consulting</h3>
+                        <p>Expert guidance to help you find the perfect property</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="icon">📋</div>
+                        <h3>Site Visit Assistance</h3>
+                        <p>Comprehensive site visits with detailed analysis</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="icon">📄</div>
+                        <h3>Documentation</h3>
+                        <p>Complete assistance with legal documentation</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="icon">🏠</div>
+                        <h3>Best Deals</h3>
+                        <p>Negotiating the best deals for maximum value</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="icon">⭐</div>
+                        <h3>Home Loan Assistance</h3>
+                        <p>Expert guidance for home loan approvals</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section class="blog-section">
+            <div class="container">
+                <h2 class="section-title">Explore Our Latest Blogs</h2>
+                <div class="blog-grid">
+                    <div class="blog-card">
+                        <img src="/img/prof.jpg" alt="Blog">
+                        <div class="blog-info">
+                            <div class="blog-date">March 15, 2024</div>
+                            <h3>Top 10 Real Estate Investment Tips for 2024</h3>
+                            <p>Discover the best strategies for real estate investment...</p>
+                        </div>
+                    </div>
+                    <div class="blog-card">
+                        <img src="/img/pic2.jpg" alt="Blog">
+                        <div class="blog-info">
+                            <div class="blog-date">March 12, 2024</div>
+                            <h3>First-Time Home Buyer's Complete Guide</h3>
+                            <p>Everything you need to know about buying your first home...</p>
+                        </div>
+                    </div>
+                    <div class="blog-card">
+                        <img src="/img/prof.jpg" alt="Blog">
+                        <div class="blog-info">
+                            <div class="blog-date">March 10, 2024</div>
+                            <h3>Bangalore Property Market Trends 2024</h3>
+                            <p>Comprehensive analysis of Bangalore's real estate market...</p>
+                        </div>
+                    </div>
+                    <div class="blog-card">
+                        <img src="/img/prof.jpg" alt="Blog">
+                        <div class="blog-info">
+                            <div class="blog-date">March 8, 2024</div>
+                            <h3>Luxury Homes: What to Look For</h3>
+                            <p>Key features that define luxury residential properties...</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="view-more-btn">View All Blogs</button>
+            </div>
+        </section>
+
+        <!-- Awards Section -->
+        <section class="awards-section">
+            <div class="container">
+                <h2 class="section-title">Our Awards and Recognitions</h2>
+                <div class="awards-grid">
+                    <div class="award-item">
+                        <img src="/img/agent.jpg" alt="Award">
+                        <p>Best Real Estate Company 2023</p>
+                    </div>
+                    <div class="award-item">
+                        <img src="/img/prof.jpg" alt="Award">
+                        <p>Excellence in Customer Service</p>
+                    </div>
+                    <div class="award-item">
+                        <img src="/img/prof.jpg" alt="Award">
+                        <p>Innovation in PropTech</p>
+                    </div>
+                    <div class="award-item">
+                        <img src="/img/prof.jpg" alt="Award">
+                        <p>Most Trusted Brand</p>
+                    </div>
+                    <div class="award-item">
+                        <img src="/img/prof.jpg" alt="Award">
+                        <p>Quality Excellence Award</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials-section">
+            <div class="container">
+                <h2 class="section-title">What our Clients have to Say</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                        <p class="testimonial-text">"RajuTimes helped me find my dream home in Bangalore. Their team was professional and guided me through every step of the process."</p>
+                        <div class="testimonial-author">- Priya Sharma</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                        <p class="testimonial-text">"Excellent service and great property options. The team at RajuTimes made my property investment journey smooth and hassle-free."</p>
+                        <div class="testimonial-author">- Rajesh Kumar</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                        <p class="testimonial-text">"Professional approach and transparent dealings. I highly recommend RajuTimes for anyone looking to buy property in India."</p>
+                        <div class="testimonial-author">- Anita Patel</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section" id="contact">
+            <div class="container">
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h2>Get in Touch with Us</h2>
+                        <p>Ready to find your dream property? Our expert team is here to help you every step of the way. Contact us today for personalized assistance.</p>
+                        <div class="contact-details">
+                            <p><i class="fas fa-phone"></i> +91 7996590915</p>
+                            <p><i class="fas fa-envelope"></i> info@rajutimes.com</p>
+                            <p><i class="fas fa-map-marker-alt"></i> Bangalore, Karnataka, India</p>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <h3>Send us a Message</h3>
+                        <form>
+                            <div class="form-row">
+                                <input type="text" placeholder="First Name" required>
+                                <input type="text" placeholder="Last Name" required>
+                            </div>
+                            <div class="form-row">
+                                <input type="email" placeholder="Email Address" required>
+                                <input type="tel" placeholder="Phone Number" required>
+                            </div>
+                            <textarea placeholder="Your Message" required></textarea>
+                            <button type="submit" class="submit-btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Added Careers Page Section -->
+    <div id="careers-page" class="page-section">
+        <section class="careers-hero">
+            <div class="container">
+                <div class="careers-content">
+                    <h1>Become a Part of<br>Something Extraordinary</h1>
+                    <p>At RajuTimes, we help people find the right properties by making real estate simple, transparent, and valuable. Our mission is to create meaningful experiences and long-term value for every client. When you join us, you become part of a purpose-driven team committed to making a real difference in the property world.</p>
+                    <button class="explore-jobs-btn">Explore Jobs</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="life-at-company">
+            <div class="container">
+                <h2>Life At RajuTimes</h2>
+                <div class="company-culture-grid">
+                    <div class="culture-card">
+                        <img src="/img/pic2.jpg" alt="Team Collaboration">
+                        <div class="culture-card-content">
+                            <h3>Collaborative Environment</h3>
+                            <p>Work with passionate professionals who share your vision for excellence in real estate.</p>
+                        </div>
+                    </div>
+                    <div class="culture-card">
+                        <img src="/img/agent.jpg" alt="Professional Development">
+                        <div class="culture-card-content">
+                            <h3>Growth Opportunities</h3>
+                            <p>Continuous learning and development programs to advance your career in the industry.</p>
+                        </div>
+                    </div>
+                    <div class="culture-card">
+                        <img src="/img/prof.jpg" alt="Modern Workspace">
+                        <div class="culture-card-content">
+                            <h3>Modern Workspace</h3>
+                            <p>State-of-the-art facilities and technology to support your productivity and creativity.</p>
+                        </div>
+                    </div>
+                    <div class="culture-card">
+                        <img src="/img/prof.jpg" alt="Team Success">
+                        <div class="culture-card-content">
+                            <h3>Recognition & Rewards</h3>
+                            <p>We celebrate achievements and recognize outstanding contributions to our success.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Added Blogs Page Section -->
+    <div id="blogs-page" class="page-section">
+        <section class="blogs-hero">
+            <div class="container">
+                <h1>Explore Our Latest Blogs</h1>
+                <p>Stay Informed and Inspired</p>
+            </div>
+        </section>
+
+        <section style="padding: 2rem 0;">
+            <div class="container">
+                <div class="blog-filters">
+                    <button class="filter-btn active">All</button>
+                    <button class="filter-btn">Buying Guide</button>
+                    <button class="filter-btn">Investment Guide</button>
+                    <button class="filter-btn">Life Style</button>
+                    <button class="filter-btn">Market Trends</button>
+                    <button class="filter-btn">NRI Guide</button>
+                    <button class="filter-btn">Outdoor Space</button>
+                    <button class="filter-btn">Project Review</button>
+                    <button class="filter-btn">Real Estate</button>
+                </div>
+
+                <div class="blog-search">
+                    <input type="text" placeholder="Search here...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+
+                <div class="blogs-grid">
+                    <div class="blog-post-card">
+                        <img src="/img/prof.jpg" alt="Godrej Woodscapes">
+                        <div class="blog-post-content">
+                            <div class="blog-category">Project Review</div>
+                            <h3>Godrej Woodscapes Project Review | Review #46</h3>
+                            <div class="blog-meta">
+                                <span>Mar 21, 2025</span>
+                                <button class="read-more-btn">Read more</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="blog-post-card">
+                        <img src="/img/agent.jpg" alt="Brigade Misty Green">
+                        <div class="blog-post-content">
+                            <div class="blog-category">Project Review</div>
+                            <h3>Brigade Misty Green Project Review | Review #45</h3>
+                            <div class="blog-meta">
+                                <span>Mar 19, 2025</span>
+                                <button class="read-more-btn">Read more</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="blog-post-card">
+                        <img src="/img/pic2.jpg" alt="Prestige Suncrest">
+                        <div class="blog-post-content">
+                            <div class="blog-category">Project Review</div>
+                            <h3>Prestige Suncrest Project Review | Review #44</h3>
+                            <div class="blog-meta">
+                                <span>Mar 14, 2025</span>
+                                <button class="read-more-btn">Read more</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="blog-post-card">
+                        <img src="/img/prof.jpg" alt="Sobha Ayana">
+                        <div class="blog-post-content">
+                            <div class="blog-category">Project Review</div>
+                            <h3>Sobha Ayana Project Review | Review #43</h3>
+                            <div class="blog-meta">
+                                <span>Mar 07, 2025</span>
+                                <button class="read-more-btn">Read more</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="blog-post-card">
+                        <img src="/img/prof.jpg" alt="Investment Guide">
+                        <div class="blog-post-content">
+                            <div class="blog-category">Investment Guide</div>
+                            <h3>Smart Investment Strategies for 2025</h3>
+                            <div class="blog-meta">
+                                <span>Mar 05, 2025</span>
+                                <button class="read-more-btn">Read more</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="blog-post-card">
+                        <img src="/img/pic2.jpg" alt="Buying Guide">
+                        <div class="blog-post-content">
+                            <div class="blog-category">Buying Guide</div>
+                            <h3>First-Time Home Buyer's Checklist</h3>
+                            <div class="blog-meta">
+                                <span>Mar 02, 2025</span>
+                                <button class="read-more-btn">Read more</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Added About Us Page Section -->
+    <div id="about-page" class="page-section">
+        <section class="about-hero">
+            <div class="container">
+                <div class="about-hero-content">
+                    <h1>Helping Many Find Their <span class="highlight">Dream Nest</span></h1>
+                    <p>Your search for your dream home ends here. We believe that everyone deserves a roof over their head and we are here to help millions of Indians find their dream home that suits their taste and budget.</p>
+                    <button class="view-properties-btn">View Properties <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-content">
+            <div class="container">
+                <div class="about-section">
+                    <h2>About Us</h2>
+                    <p>RajuTimes is a premier real estate consultancy dedicated to fulfilling the aspirations of home-buyers by assisting them in finding their dream homes. We specialize in residential and commercial properties across India's major metropolitan cities, offering comprehensive services from property consultation to final documentation.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="team-section">
+            <div class="container">
+                <h2>Meet Our Leadership Team</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <img src="/img/agent.jpg" alt="Nilesh Thorat">
+                        <h3>NILESH THORAT</h3>
+                        <p class="position">AVP Sales</p>
+                        <button class="linkedin-btn"><i class="fab fa-linkedin"></i></button>
+                    </div>
+                    <div class="team-member">
+                        <img src="/img/pic2.jpg" alt="Nikhil Kumar">
+                        <h3>NIKHIL KUMAR</h3>
+                        <p class="position">DGM Sales</p>
+                        <button class="linkedin-btn"><i class="fab fa-linkedin"></i></button>
+                    </div>
+                    <div class="team-member">
+                        <img src="/img/agent.jpg" alt="Ajith Kudur">
+                        <h3>AJITH KUDUR</h3>
+                        <p class="position">AGM Sales</p>
+                        <button class="linkedin-btn"><i class="fab fa-linkedin"></i></button>
+                    </div>
+                    <div class="team-member">
+                        <img src="/img/pic2.jpg" alt="Dharun Kumar">
+                        <h3>DHARUN KUMAR</h3>
+                        <p class="position">DGM Sales</p>
+                        <button class="linkedin-btn"><i class="fab fa-linkedin"></i></button>
+                    </div>
+                    <div class="team-member">
+                        <img src="/img/pic2.jpg" alt="Team Member">
+                        <h3>RAJESH PATEL</h3>
+                        <p class="position">Senior Manager</p>
+                        <button class="linkedin-btn"><i class="fab fa-linkedin"></i></button>
+                    </div>
+                    <div class="team-member">
+                        <img src="/img/pic2.jpg" alt="Team Member">
+                        <h3>PRIYA SHARMA</h3>
+                        <p class="position">Marketing Head</p>
+                        <button class="linkedin-btn"><i class="fab fa-linkedin"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Added Properties Page Section -->
+   <!-- Properties Page Section -->
+<div id="properties-page" class="page-section">
+  <section class="properties-section">
+    <div class="container">
+      <h1 class="section-title">Our Properties</h1>
+
+      <!-- Filter Section -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-type="all">All</button>
+        <button class="filter-btn" data-type="2bhk">2-3 BHK</button>
+        <button class="filter-btn" data-type="3bhk">3-4 BHK</button>
+        <button class="filter-btn" data-type="luxury">Luxury</button>
+      </div>
+
+      <!-- Properties Grid -->
+      <div class="properties-grid">
+        <!-- Property Card 1 -->
+        <div class="property-card" data-type="2bhk">
+          <img src="/img/pic2.jpg" alt="Prestige Southern Star" class="property-image">
+          <div class="property-info">
+            <h3 class="property-title">Prestige Southern Star</h3>
+            <p class="location">Begur Road, Bangalore</p>
+            <div class="property-price">₹1.2 Cr onwards</div>
+            <div class="property-features">
+              <span class="feature"><i class="fas fa-bed"></i> 2-3 BHK</span>
+              <span class="feature"><i class="fas fa-bath"></i> 2 Bath</span>
+              <span class="feature"><i class="fas fa-car"></i> Parking</span>
+            </div>
+            <button class="view-details-btn">View Details</button>
+          </div>
+        </div>
+
+        <!-- Property Card 2 -->
+        <div class="property-card" data-type="3bhk">
+          <img src="/img/pic2.jpg" alt="Sobha Dream Acres" class="property-image">
+          <div class="property-info">
+            <h3 class="property-title">Sobha Dream Acres</h3>
+            <p class="location">Panathur Road, Bangalore</p>
+            <div class="property-price">₹2.5 Cr onwards</div>
+            <div class="property-features">
+              <span class="feature"><i class="fas fa-bed"></i> 3-4 BHK</span>
+              <span class="feature"><i class="fas fa-bath"></i> 3 Bath</span>
+              <span class="feature"><i class="fas fa-car"></i> 2 Parking</span>
+            </div>
+            <button class="view-details-btn">View Details</button>
+          </div>
+        </div>
+
+        <!-- Property Card 3 -->
+        <div class="property-card" data-type="luxury">
+          <img src="/img/pic2.jpg" alt="Godrej Aqua" class="property-image">
+          <div class="property-info">
+            <h3 class="property-title">Godrej Aqua</h3>
+            <p class="location">Hosur Road, Bangalore</p>
+            <div class="property-price">₹95 Lac onwards</div>
+            <div class="property-features">
+              <span class="feature"><i class="fas fa-bed"></i> 2-3 BHK</span>
+              <span class="feature"><i class="fas fa-bath"></i> 2 Bath</span>
+              <span class="feature"><i class="fas fa-car"></i> Parking</span>
+            </div>
+            <button class="view-details-btn">View Details</button>
+          </div>
+        </div>
+
+        <!-- Add more property cards here -->
+      </div>
+    </div>
+  </section>
+</div>
+
+    <!-- Added Contact Page Section -->
+    <div id="contact-page" class="page-section">
+        <section style="padding: 6rem 0 4rem;">
+            <div class="container">
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h2>Get in Touch with Us</h2>
+                        <p>Ready to find your dream property? Our expert team is here to help you every step of the way. Contact us today for personalized assistance.</p>
+                        <div class="contact-details">
+                            <p><i class="fas fa-phone"></i> +91 79965 90915</p>
+                            <p><i class="fas fa-envelope"></i> info@rajutimes.com</p>
+                            <p><i class="fas fa-map-marker-alt"></i> Bangalore, Karnataka, India</p>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <h3>Send us a Message</h3>
+                        <form>
+                            <div class="form-row">
+                                <input type="text" placeholder="First Name" required>
+                                <input type="text" placeholder="Last Name" required>
+                            </div>
+                            <div class="form-row">
+                                <input type="email" placeholder="Email Address" required>
+                                <input type="tel" placeholder="Phone Number" required>
+                            </div>
+                            <textarea placeholder="Your Message" required></textarea>
+                            <button type="submit" class="submit-btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Added Newsroom Page Section -->
+    <div id="newsroom-page" class="page-section">
+        <section style="padding: 6rem 0 4rem; background: #f8f9fa;">
+            <div class="container">
+                <h1 style="text-align: center; font-size: 2.5rem; color: #333; margin-bottom: 3rem;">Newsroom</h1>
+                <div class="blog-grid">
+                    <div class="blog-card">
+                        <img src="/img/agent.jpg" alt="News">
+                        <div class="blog-info">
+                            <div class="blog-date">March 20, 2024</div>
+                            <h3>RajuTimes Expands to New Cities</h3>
+                            <p>We're excited to announce our expansion into Chennai and Hyderabad markets...</p>
+                        </div>
+                    </div>
+                    <div class="blog-card">
+                        <img src="/img/prof.jpg" alt="News">
+                        <div class="blog-info">
+                            <div class="blog-date">March 18, 2024</div>
+                            <h3>RajuTimes Wins Best Real Estate Company Award</h3>
+                            <p>Proud to receive recognition for our outstanding service and innovation...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>RajuTimes</h3>
+                    <p>Your trusted partner in finding the perfect property. We specialize in residential and commercial real estate across India's major cities.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#" onclick="showPage('home')">Home</a></li>
+                        <li><a href="#" onclick="showPage('properties')">Properties</a></li>
+                        <li><a href="#" onclick="showPage('careers')">Careers</a></li>
+                        <li><a href="#" onclick="showPage('blogs')">Blogs</a></li>
+                        <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Property Consulting</a></li>
+                        <li><a href="#">Site Visit Assistance</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Home Loan Assistance</a></li>
+                        <li><a href="#">Investment Advisory</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Locations</h3>
+                    <ul>
+                        <li><a href="#">Bangalore</a></li>
+                        <li><a href="#">Pune</a></li>
+                        <li><a href="#">Chennai</a></li>
+                        <li><a href="#">Hyderabad</a></li>
+                        <li><a href="#">Dubai</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 RajuTimes. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Added Floating Buttons -->
+    <div class="floating-buttons">
+        <a href="https://wa.me/7996590915" class="float-btn whatsapp-btn" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="tel:+917996590915" class="float-btn phone-btn">
+            <i class="fas fa-phone"></i>
+        </a>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all page sections
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show selected page
+            const targetPage = document.getElementById(pageId + '-page');
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            // Update navigation active state
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Find and activate current nav link
+            const currentNavLink = document.querySelector(`[onclick="showPage('${pageId}')"]`);
+            if (currentNavLink) {
+                currentNavLink.classList.add('active');
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        });
+
+        // Blog filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+
+        // Form submissions
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for your message! We will get back to you soon.');
+                    this.reset();
+                });
+            });
+        });
+
+        // Search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchButtons = document.querySelectorAll('.search-button, .blog-search button');
+            searchButtons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Searching... This would redirect to search results page.');
+                });
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+
+
+
+
+
+
+        const slider = document.querySelector('.partners-slider');
+
+slider.addEventListener('mouseenter', () => {
+  slider.style.animationPlayState = 'paused';
+});
+
+slider.addEventListener('mouseleave', () => {
+  slider.style.animationPlayState = 'running';
+});
+
+
+
+
+
+
+
+const filterButtons = document.querySelectorAll('.filter-btn');
+const propertyCards = document.querySelectorAll('.property-card');
+
+filterButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const type = btn.getAttribute('data-type');
+
+    propertyCards.forEach(card => {
+      if (type === 'all' || card.getAttribute('data-type') === type) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+});
+
+
+
+
+
+
+
+
+        // Add scroll effect for floating buttons
+        window.addEventListener('scroll', function() {
+            const floatingButtons = document.querySelector('.floating-buttons');
+            if (window.scrollY > 300) {
+                floatingButtons.style.opacity = '1';
+            } else {
+                floatingButtons.style.opacity = '0.7';
+            }
+        });
+    </script>
+</body>
+</html>
