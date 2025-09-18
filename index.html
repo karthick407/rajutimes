@@ -565,94 +565,146 @@
         }
 
 
+
+
+
+
+
+
+
+
+
         /* Hero Section */
 
 
 
+/* Hero Section */
+.hero {
+  background: url("img/house.jpg") center/cover no-repeat;
+  padding: 80px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url("img/house.jpg");
-            background-size: cover;
-            background-position: center;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding-top: 80px;
-        }
+.hero .container {
+  background: #ffffff; /* fully solid white inside */
+  border-radius: 15px;
+  padding: 30px;
+  max-width: 1000px;
+  width: 100%;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 
-        .hero-content {
-            color: white;
-            max-width: 600px;
-        }
+  /* Transparent glassy border */
+  border: 20px solid #ccc; /* transparent white */
+  backdrop-filter: blur(15px);                  /* frosted glass border effect */
+  -webkit-backdrop-filter: blur(15px);          /* Safari support */
+}
 
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
 
-        .highlight {
-            color: #ff6b35;
-        }
 
-        .hero-subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
 
-        .search-form {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
+.hero-content {
+  text-align: center;
+  color: #222;
+}
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
+.hero-content h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
 
-        .form-group label {
-            color: #333;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
+.hero-content h1 .highlight {
+  color: #f97316;
+  font-weight: 700;
+}
 
-        .form-group select {
-            padding: 0.8rem;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            background: white;
-        }
+.hero-content p {
+  color: #444;
+  margin-bottom: 25px;
+  font-size: 16px;
+}
 
-        .search-button {
-            background: #ff6b35;
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            justify-self: start;
-        }
+/* Search Form */
+.search-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end; /* aligns button with inputs */
+  gap: 12px;
+  justify-content: center;
+}
 
-        .search-button:hover {
-            background: #e55a2b;
-            transform: translateY(-2px);
-        }
+.form-group {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.form-group select,
+.form-group input {
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group select:focus,
+.form-group input:focus {
+  border-color: #f97316;
+  outline: none;
+  box-shadow: 0 0 6px rgba(249, 115, 22, 0.4);
+}
+
+/* Search Button */
+.search-button {
+  background: #f97316;
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 44px;
+
+  /* remove top margin so it's inline */
+  margin-top: 0;
+}
+
+.search-button:hover {
+  background: #ea580c;
+  transform: translateY(-2px);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /* Cities Section */
         .cities-section {
@@ -1576,63 +1628,69 @@
             </button>
         </nav>
     </header>
+<!-- Added Home Page Section -->
+<div id="home-page" class="page-section active">
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Find your <span class="highlight">Dream home</span> with RajuTimes</h1>
+                <p class="hero-subtitle">Discover the perfect property that matches your lifestyle and budget</p>
+                
+                <form class="search-form">
+                    <div class="form-group">
+                        <label>Location</label>
+                        <select>
+                            <option>Select Location</option>
+                            <option>Bangalore</option>
+                            <option>Pune</option>
+                            <option>Chennai</option>
+                            <option>Hyderabad</option>
+                            <option>Dubai</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Property Type</label>
+                        <select>
+                            <option>Select Type</option>
+                            <option>Apartment</option>
+                            <option>Villa</option>
+                            <option>Office</option>
+                            <option>Commercial</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Budget</label>
+                        <select>
+                            <option>Select Budget</option>
+                            <option>Under 50L</option>
+                            <option>50L - 1Cr</option>
+                            <option>1Cr - 2Cr</option>
+                            <option>Above 2Cr</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Purpose</label>
+                        <select>
+                            <option>Buy/Rent</option>
+                            <option>Buy</option>
+                            <option>Rent</option>
+                        </select>
+                    </div>
 
-    <!-- Added Home Page Section -->
-    <div id="home-page" class="page-section active">
-        <!-- Hero Section -->
-        <section class="hero" id="home">
-            <div class="container">
-                <div class="hero-content">
-                    <h1>Find your <span class="highlight">Dream home</span> with RajuTimes</h1>
-                    <p class="hero-subtitle">Discover the perfect property that matches your lifestyle and budget</p>
-                    
-                    <form class="search-form">
-                        <div class="form-group">
-                            <label>Location</label>
-                            <select>
-                                <option>Select Location</option>
-                                <option>Bangalore</option>
-                                <option>Pune</option>
-                                <option>Chennai</option>
-                                <option>Hyderabad</option>
-                                <option>Dubai</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Property Type</label>
-                            <select>
-                                <option>Select Type</option>
-                                <option>Apartment</option>
-                                <option>Villa</option>
-                                <option>Office</option>
-                                <option>Commercial</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Budget</label>
-                            <select>
-                                <option>Select Budget</option>
-                                <option>Under 50L</option>
-                                <option>50L - 1Cr</option>
-                                <option>1Cr - 2Cr</option>
-                                <option>Above 2Cr</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Purpose</label>
-                            <select>
-                                <option>Buy/Rent</option>
-                                <option>Buy</option>
-                                <option>Rent</option>
-                            </select>
-                        </div>
-                    </form>
-                    <button class="search-button">
+                    <div class="form-group">
+                        <input type="text" placeholder="Search for Apartments / Villas / Ready To Move">
+                    </div>
+
+                    <button type="submit" class="search-button">
                         <i class="fas fa-search"></i> Search Properties
                     </button>
-                </div>
+                </form>
             </div>
-        </section>
+        </div>
+    </section>
+</div>
+
 
         <!-- Cities Section -->
         <section class="cities-section">
