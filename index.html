@@ -1641,48 +1641,67 @@ void write_to_file(const char *process_name, int iterations) {
 
 int main() {
     // Unlink the semaphore first in case it wasn't cleaned up previously
-    sem_unlink(SEM_NAME);
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <semaphore.h>
+#include <sys/stat.h>
 
-    // Initialize named semaphore with value 1 (unlocked / available)
-    sem_t *sem = sem_open(SEM_NAME, O_CREAT | O_EXCL, 0644, 1);
-    if (sem == SEM_FAILED) {
-        perror("Main sem_open failed");
+#define FILE_NAME "data.txt"
+#define SEM_NAME "/file_lock_sem"
+
+int main()
+{
+    FILE *fp;
+    sem_t *sem;
+
+    /* Create/open a named semaphore */
+    sem = sem_open(SEM_NAME, O_CREAT, 0644, 1);
+
+    if (sem == SEM_FAILED)
+    {
+        perror("sem_open");
         exit(EXIT_FAILURE);
     }
 
-    // Create / Clear the output file
-    FILE *file = fopen(FILE_NAME, "w");
-    if (file != NULL) fclose(file);
+    printf("Process %d: Waiting for file lock...\n", getpid());
 
-    printf("Starting file locking demonstration using semaphores...\n\n");
+    /* Acquire semaphore (lock) */
+    sem_wait(sem);
 
-    pid_t pid = fork();
+    printf("Process %d: File locked.\n", getpid());
 
-    if (pid < 0) {
-        perror("Fork failed");
+    /* Critical section */
+    fp = fopen(FILE_NAME, "a");
+
+    if (fp == NULL)
+    {
+        perror("fopen");
+        sem_post(sem);
         sem_close(sem);
-        sem_unlink(SEM_NAME);
         exit(EXIT_FAILURE);
-    } 
-    else if (pid == 0) {
-        // Child Process
-        write_to_file("Child Process", 3);
-        exit(EXIT_SUCCESS);
-    } 
-    else {
-        // Parent Process
-        write_to_file("Parent Process", 3);
-
-        // Wait for child process to finish
-        wait(NULL);
-
-        // Cleanup resources
-        sem_close(sem);
-        sem_unlink(SEM_NAME);
-        printf("Demonstration finished. Check '%s' to verify results.\n", FILE_NAME);
     }
+
+    fprintf(fp, "Process %d is writing to the file.\n", getpid());
+
+    /* Simulate some processing time */
+    sleep(3);
+
+    fclose(fp);
+
+    printf("Process %d: Data written successfully.\n", getpid());
+
+    /* Release semaphore (unlock) */
+    sem_post(sem);
+
+    printf("Process %d: File unlocked.\n", getpid());
+
+    /* Close semaphore */
+    sem_close(sem);
 
     return 0;
+}
 }festyle and budget</p>
                     
                     <form class="search-form">
